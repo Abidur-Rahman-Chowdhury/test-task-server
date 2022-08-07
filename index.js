@@ -62,7 +62,7 @@ async function run() {
         
             }
             const result = await dataCollection.updateOne(filter, updatedDoc, options);
-            console.log(result);
+           
             res.send(result);
             
         })
