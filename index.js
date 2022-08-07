@@ -29,7 +29,13 @@ async function run() {
             const data = req.body;
             const result = await dataCollection.insertOne(data);
             res.send(result);
-        } )
+        })
+
+        // get all data from data base
+        app.get('/getData', async (req, res) => {
+            const data = await dataCollection.find().toArray();
+            res.send(data);
+        })
     }
     finally {
 
