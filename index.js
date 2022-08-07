@@ -36,6 +36,36 @@ async function run() {
             const data = await dataCollection.find().toArray();
             res.send(data);
         })
+
+        // delete data from data base
+        app.delete('/deleteData/:id', async (req, res) => {
+            const id = req.params.id;
+            const filter = { _id: ObjectId(id) };
+            const result = await dataCollection.deleteOne(filter);
+      
+            res.send(result);
+        });
+        // update data 
+        app.put('/updateData/:id', async (req, res) => {
+            const id = req.params.id;
+            const filter = { _id: ObjectId(id) };
+            const updatedData = req.body;
+            const options = {upsert: true}
+            console.log(updatedData);
+            const updatedDoc = {
+                $set: { 
+                    title: updatedData.updateTitle,
+                    description:updatedData.updateDescription ,
+                    status: updatedData.updateStatus,
+                    time:updatedData.updateTime
+              }
+        
+            }
+            const result = await dataCollection.updateOne(filter, updatedDoc, options);
+            console.log(result);
+            res.send(result);
+            
+        })
     }
     finally {
 
